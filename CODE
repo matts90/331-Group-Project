@@ -1,0 +1,163 @@
+/*
+Date:
+Application Name: Semester Project – Part 1 of 5: 
+                    First Shenandoah Bank Information System
+Team Members: Matt Seiler,
+Purpose: Banking system with menus to accept deposits and withdrawals. Also can
+            display current balance and transaction reports.
+*/
+
+
+package ch7and8;
+import java.util.*;
+public class GroupProject {
+    public static void main(String[] args) {
+        
+        int transactionCount = 0;                           
+        int depositCount = 0;
+        int withdrawalCount = 0;
+        String descriptionArray[] = new String[1000];
+        double amountArray[] = new double[1000];
+        long dateArray[] = new long[1000];
+        
+        
+        
+        
+        String userName;
+        String optionChoice;
+  
+          int x = 0;
+        
+        Scanner in = new Scanner(System.in);
+        System.out.println("Welcome to First Shenandoah Bank!");
+        //Collect users name
+        System.out.print("Enter New Customer Name (Lastname, Firstname MI):");
+        userName = in.nextLine();
+        
+        //run this infinite loop so this code below is the only thing that runs
+        //when returning to Main Menu
+       do{
+        System.out.println("");
+        System.out.print("Please choose an option:"
+                           + "\n1: Make a Deposit"
+                           + "\n2: Make a Withdrawal"
+                           + "\n3: Tools Menu"
+                           + "\n4: Quit Program \n"
+                           + "--------------\nChoice: ");
+        
+        optionChoice = in.nextLine(); //users selection
+        
+        switch (optionChoice){
+             case "1": depositCount = makeADeposit(transactionCount,
+                     depositCount,descriptionArray,amountArray,dateArray);break;
+             case "2": withdrawalCount = makeAWithdrawal(transactionCount,
+                     withdrawalCount,descriptionArray,amountArray,
+                     dateArray);break;
+             case "3": toolsMenu(transactionCount,descriptionArray,amountArray,
+                     dateArray);break;
+             case "4": System.out.println("Logging out... Thank you!");
+                       System.exit(0);break;
+             default: System.out.println("\n*Please select an option 1-4");break;
+
+         }
+        //Total transactions = total deposit & withdrawal transactions
+        transactionCount = depositCount + withdrawalCount;
+     
+        }while (x==0);
+       
+       
+        
+       
+       
+       /*
+       *********************NOTES*****************NOTES****************
+       -Deposits are positive values in amount array
+       -withdrawals are negative values in amount array
+                - value = value -(value *2)??
+       
+       ****************************************************************
+       */
+           
+        
+        
+    }
+    
+    public static int makeADeposit(int counter, int depositCount,
+            String[] description,double[] amount,long[] date){
+        Scanner in = new Scanner(System.in);
+        System.out.print("Enter Deposit Description: ");
+        description[counter] = in.nextLine();
+        System.out.print("Enter Amount: ");
+        amount[counter] = in.nextDouble();
+        date[counter] = dateConversion(); //Call dateConversion and convert
+                                          //before storing in date array
+        depositCount++;//add 1 to deposit count each time a deposit is made
+        
+        return depositCount;    
+    }
+    
+    public static int makeAWithdrawal(int counter,int withdrawalCount,
+            String[] description,double[] amount,long[] date){
+        Scanner in = new Scanner(System.in);
+        System.out.print("Enter Withdrawal Description: ");
+        description[counter] = in.nextLine();
+        System.out.print("Enter Amount: ");
+        amount[counter] = in.nextDouble();
+        date[counter] = dateConversion(); //Call dateConversion and convert
+                                          //before storing in date array
+        withdrawalCount++;//add 1 to deposit count each time a deposit is made
+        return withdrawalCount;    
+    }
+    
+    public static void toolsMenu(int counter,String[] description,
+            double[] amount,long[] date){
+       int x = 0;
+      
+       //run this infinite loop so this code below is the only thing that runs
+        //when returning to Tools Menu/if 1,2,3 is not selected
+       do{ 
+       String optionChoice; 
+       Scanner in = new Scanner(System.in);
+       System.out.println("");
+       System.out.print("Make Tools Choice:"
+                          + "\n1: Current Balance"
+                          + "\n2: Transaction Report"
+                          + "\n3: <-- Back to Main Menu \n"
+                          + "--------------\nChoice: ");
+       
+       optionChoice = in.nextLine();//users selection
+       
+       switch (optionChoice){
+            case "1": currentBalance(counter,amount);break;
+            case "2": transactionReport(counter,description,amount,date);break;
+            case "3": return;  
+        }
+        }while(x==0);
+  
+    }
+    public static void currentBalance(int counter,double[] amount){
+        /*if counter = 0
+             display "Your Currenct Balance Is: $0.00"
+         else run code
+            use for loop (OR ForEach work?)sum
+            format as shown in directions
+         */
+    }
+  
+    public static void transactionReport(int counter,String[] description,
+            double[] amount,long[] date){
+      /*if counter = 0 s.o.p"no transactions"
+        else run code  
+            use for loop OR ForEach 
+            s.o.printf(format using printf techniques to look like example in direction)
+
+      */
+    }
+    
+    public static long dateConversion(){
+        //DATE SHOULD BE long. Do research to figure out how. Cite source in comment line
+        long newDate = 0;
+        return newDate;
+    }
+    
+}
