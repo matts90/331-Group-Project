@@ -9,7 +9,13 @@ Purpose: Banking system with menus to accept deposits and withdrawals. Also can
 
 
 package ch7and8;
+import java.util.Scanner;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.util.GregorianCalendar;
 import java.util.*;
+import java.text.*;
 public class GroupProject {
     public static void main(String[] args) {
         
@@ -60,7 +66,7 @@ public class GroupProject {
              default: System.out.println("\n*Please select an option 1-4");break;
 
          }
-        //Total transactions = total deposit & withdrawal transactions
+        //Total transactions = total deposit &  total withdrawal transactions
         transactionCount = depositCount + withdrawalCount;
      
         }while (x==0);
@@ -103,6 +109,8 @@ public class GroupProject {
         description[counter] = in.nextLine();
         System.out.print("Enter Amount: ");
         amount[counter] = in.nextDouble();
+        amount[counter] = (amount[counter]*(-1));
+        
         date[counter] = dateConversion(); //Call dateConversion and convert
                                           //before storing in date array
         withdrawalCount++;//add 1 to deposit count each time a deposit is made
@@ -136,28 +144,71 @@ public class GroupProject {
   
     }
     public static void currentBalance(int counter,double[] amount){
-        /*if counter = 0
-             display "Your Currenct Balance Is: $0.00"
-         else run code
-            use for loop (OR ForEach work?)sum
-            format as shown in directions
-         */
+        double balanceSum =0;
+        if(counter == 0) //No transactions have occured
+             System.out.println("Your Currenct Balance Is: $0.00");
+         else //At least one transaction has occured
+            for (double e: amount)
+                balanceSum += e;
+        System.out.print("Your Current Balance Is: $");
+        System.out.printf("%1.2f", balanceSum);
+        System.out.println("\n--------------");
+                
+                
+        
     }
   
     public static void transactionReport(int counter,String[] description,
             double[] amount,long[] date){
-      /*if counter = 0 s.o.p"no transactions"
-        else run code  
-            use for loop OR ForEach 
-            s.o.printf(format using printf techniques to look like example in direction)
+        
+        
+        if(counter == 0)
+            System.out.println("No Transactions Occured!");
+        else 
+        {
+            System.out.println("Transaction Report: \n"
+                               + "Date: \t Amount: \t Description: ");
+            for(int i=0;i<counter;i++)
+            {
+               
+                DateFormat dateFormat = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
+                Date newDate = new Date(dateFormat);
+                System.out.println(newDate);
+             
+ 
+                
+/*                
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS",Locale.US);
 
-      */
+GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("US/Central"));
+calendar.setTimeInMillis(yourmilliseconds);
+
+System.out.println("GregorianCalendar -"+sdf.format(calendar.getTime()));
+
+DateTime jodaTime = new DateTime(yourmilliseconds, 
+                    DateTimeZone.forTimeZone(TimeZone.getTimeZone("US/Central")));
+DateTimeFormatter parser1 = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss,SSS");
+
+System.out.println("jodaTime "+parser1.print(jodaTime));
+*/
+                
+            }
+        }
+        
+       
+            
+        
+        
+        //System.out.printf(%, date);
+            //s.o.printf(format using printf techniques to look like example in direction)
+
+     
     }
     
     public static long dateConversion(){
         //DATE SHOULD BE long. Do research to figure out how. Cite source in comment line
-        long newDate = 0;
-        return newDate;
+        long currentTime = System.currentTimeMillis();
+        return currentTime;
     }
     
 }
