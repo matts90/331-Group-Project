@@ -1,19 +1,13 @@
 /*
-Date:
+Date: 3/2/2016
 Application Name: Semester Project – Part 1 of 5: 
                     First Shenandoah Bank Information System
-Team Members: Matt Seiler,
+Team Members: Matt Seiler, Andrew Mize, Danielle Vasquez, Anton Zelster
 Purpose: Banking system with menus to accept deposits and withdrawals. Also can
             display current balance and transaction reports.
 */
 
-
 package ch7and8;
-import java.util.Scanner;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
-import java.util.GregorianCalendar;
 import java.util.*;
 import java.text.*;
 public class GroupProject {
@@ -25,14 +19,11 @@ public class GroupProject {
         String descriptionArray[] = new String[1000];
         double amountArray[] = new double[1000];
         long dateArray[] = new long[1000];
-        
-        
-        
-        
+      
         String userName;
         String optionChoice;
   
-          int x = 0;
+        int x = 0;//for infinite do while loop below
         
         Scanner in = new Scanner(System.in);
         System.out.println("Welcome to First Shenandoah Bank!");
@@ -69,23 +60,7 @@ public class GroupProject {
         //Total transactions = total deposit &  total withdrawal transactions
         transactionCount = depositCount + withdrawalCount;
      
-        }while (x==0);
-       
-       
-        
-       
-       
-       /*
-       *********************NOTES*****************NOTES****************
-       -Deposits are positive values in amount array
-       -withdrawals are negative values in amount array
-                - value = value -(value *2)??
-       
-       ****************************************************************
-       */
-           
-        
-        
+        }while (x==0);       
     }
     
     public static int makeADeposit(int counter, int depositCount,
@@ -95,8 +70,8 @@ public class GroupProject {
         description[counter] = in.nextLine();
         System.out.print("Enter Amount: ");
         amount[counter] = in.nextDouble();
-        date[counter] = dateConversion(); //Call dateConversion and convert
-                                          //before storing in date array
+        date[counter] = currentTime(); //Call currentTime to get milliseconds
+                                          
         depositCount++;//add 1 to deposit count each time a deposit is made
         
         return depositCount;    
@@ -111,8 +86,8 @@ public class GroupProject {
         amount[counter] = in.nextDouble();
         amount[counter] = (amount[counter]*(-1));
         
-        date[counter] = dateConversion(); //Call dateConversion and convert
-                                          //before storing in date array
+        date[counter] = currentTime(); //Call currentTime to get milliseconds
+                                          
         withdrawalCount++;//add 1 to deposit count each time a deposit is made
         return withdrawalCount;    
     }
@@ -153,60 +128,37 @@ public class GroupProject {
         System.out.print("Your Current Balance Is: $");
         System.out.printf("%1.2f", balanceSum);
         System.out.println("\n--------------");
-                
-                
-        
     }
   
     public static void transactionReport(int counter,String[] description,
             double[] amount,long[] date){
-        
         
         if(counter == 0)
             System.out.println("No Transactions Occured!");
         else 
         {
             System.out.println("Transaction Report: \n"
-                               + "Date: \t Amount: \t Description: ");
+                               + "Date: \t\t\t Amount: \t Description: ");
+            System.out.println("-------------------");
             for(int i=0;i<counter;i++)
             {
-               
-                DateFormat dateFormat = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
-                Date newDate = new Date(dateFormat);
-                System.out.println(newDate);
-             
- 
+                DateFormat dateFormat = new SimpleDateFormat("M/dd/yyyy"
+                                                             + " hh:mm:ss a");
+                Date newDate = new Date(date[i]);
                 
-/*                
-SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS",Locale.US);
-
-GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("US/Central"));
-calendar.setTimeInMillis(yourmilliseconds);
-
-System.out.println("GregorianCalendar -"+sdf.format(calendar.getTime()));
-
-DateTime jodaTime = new DateTime(yourmilliseconds, 
-                    DateTimeZone.forTimeZone(TimeZone.getTimeZone("US/Central")));
-DateTimeFormatter parser1 = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss,SSS");
-
-System.out.println("jodaTime "+parser1.print(jodaTime));
-*/
+                System.out.printf("%-25s",dateFormat.format(newDate));
+                System.out.printf("$%-15.2f", amount[i]);
+                System.out.print(description[i]);
+                System.out.println("");
                 
             }
+            System.out.println("-------------------");
+            currentBalance(counter, amount);
         }
-        
-       
-            
-        
-        
-        //System.out.printf(%, date);
-            //s.o.printf(format using printf techniques to look like example in direction)
-
-     
     }
     
-    public static long dateConversion(){
-        //DATE SHOULD BE long. Do research to figure out how. Cite source in comment line
+    public static long currentTime(){
+        //Collect current time in milliseconds
         long currentTime = System.currentTimeMillis();
         return currentTime;
     }
