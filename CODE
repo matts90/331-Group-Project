@@ -123,11 +123,13 @@ public class GroupProject {
         if(counter == 0) //No transactions have occured
              System.out.println("Your Currenct Balance Is: $0.00");
          else //At least one transaction has occured
+            {
             for (double e: amount)
                 balanceSum += e;
         System.out.print("Your Current Balance Is: $");
         System.out.printf("%1.2f", balanceSum);
         System.out.println("\n--------------");
+        }
     }
   
     public static void transactionReport(int counter,String[] description,
